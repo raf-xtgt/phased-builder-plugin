@@ -1,0 +1,12 @@
+{
+  "name": "phased-builder-marketplace",
+  "description": "Private marketplace for the phased-builder plugin",
+  "owner": { "name": "[your name]" },
+  "plugins": [
+    {
+      "name": "phased-builder",
+      "source": "./plugins/phased-builder",
+      "description": "Plan-first, phase-by-phase building with SLC, vibe/mentor modes, a build log and master docs, plus opportunity research."
+    }
+  ]
+}
