@@ -1,9 +1,19 @@
 {
   "name": "phased-builder",
   "displayName": "Phased Builder",
-  "version": "0.1.0",
-  "description": "Plan-first, phase-by-phase building with flipped interaction. Unlimited setup and build phases, SLC per phase, vibe-code or mentor mode, a build log and master docs that keep you and the agent in sync, plus opportunity research (VCs, incubators, social launch, hackathons).",
-  "author": { "name": "[your name]" },
+  "version": "0.2.0",
+  "description": "Plan-first building with flipped interaction: ideation, product-manager scoping, system architecture, user-run setup, then per feature PRD (SLC), spec and build. Vibe or mentor mode for architecture, spec and build. A build log and master docs keep you and the agent in sync. Plus opportunity research (hackathons, incubators, VCs, social launch).",
+  "author": {
+    "name": "[your name]"
+  },
   "license": "MIT",
-  "keywords": ["planning", "phases", "slc", "mentor", "build-log", "hackathon"]
+  "keywords": [
+    "planning",
+    "ideation",
+    "slc",
+    "system-design",
+    "mentor",
+    "build-log",
+    "hackathon"
+  ]
 }

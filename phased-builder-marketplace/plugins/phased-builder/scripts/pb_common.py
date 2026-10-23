@@ -38,7 +38,7 @@ def read_frontmatter(path):
             key, _, value = line.partition(":")
             value = value.split("#", 1)[0].strip().strip('"').strip("'")
             data[key.strip().lower()] = value.lower() if key.strip().lower() in (
-                "mode", "long_commands", "git", "phase_type", "step") else value
+                "mode", "long_commands", "git", "skill") else value
     return data
 
 

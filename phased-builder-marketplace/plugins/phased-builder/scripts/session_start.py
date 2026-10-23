@@ -41,8 +41,11 @@ def main():
 
     mode = fm.get("mode", "")
     if mode == "mentor":
-        parts += ["", "Mentor mode is on for the current phase: code and project files are "
-                  "written by the user; the agent edits only files in project-docs/ and CLAUDE.md."]
+        parts += ["", "Mentor mode is on: code and project files are written by the user; "
+                  "the agent edits only files in project-docs/ and CLAUDE.md."]
+    elif mode == "guide":
+        parts += ["", "Setup (guide mode) is in progress: the user does every setup step; the agent gives "
+                  "steps, debugs from pasted output, and edits only files in project-docs/ and CLAUDE.md."]
     if fm.get("long_commands", "user") != "agent":
         parts += ["", "Installs, builds, tests, dev servers and deploys are run by the user. "
                   "The agent gives exact commands and expected output, then waits for pasted results."]
@@ -51,7 +54,7 @@ def main():
 
     if source == "compact":
         parts += ["", "The conversation was just compacted. Decisions from before compaction "
-                  "are reliable only if they appear in project-docs/BUILD_LOG.md or the phase docs. "
+                  "are reliable only if they appear in project-docs/BUILD_LOG.md or the project docs. "
                   "Anything discussed but not logged may be lost and should be confirmed with the user."]
     elif source in ("resume", "clear"):
         parts += ["", f"Session source: {source}. The files above are the source of truth, not chat memory."]

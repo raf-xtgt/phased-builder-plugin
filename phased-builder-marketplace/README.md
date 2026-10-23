@@ -23,3 +23,14 @@ claude --plugin-dir /path/to/phased-builder-marketplace/plugins/phased-builder
 Open an empty project folder in Claude Code and run `/phased-builder:1-start`.
 
 Requirements: `python3` on your PATH (for the hooks), `git`.
+
+## Updating to a new version
+
+1. Replace this folder with the new one (same path as before).
+2. Run:
+   ```bash
+   claude plugin marketplace update phased-builder-marketplace
+   claude plugin update phased-builder@phased-builder-marketplace
+   ```
+3. Start a new Claude Code session (or run `/reload-plugins`). Type `/phased-builder` to see the skill list.
+   If old skill names still show, run `claude plugin uninstall phased-builder@phased-builder-marketplace`, then install again.

@@ -2,7 +2,7 @@
 
 Source idea: Jason Cohen, "Your customers hate MVPs. Make a SLC instead."
 (https://longform.asmartbear.com/slc/). Summary in our own words below. Use it for the product as a
-whole in `2-scope` and for every build phase in `3-prd`.
+whole in `3-scope` and for every feature in `6-prd`.
 
 ## The three tests
 
@@ -18,11 +18,11 @@ whole in `2-scope` and for every build phase in `3-prd`.
 **SLC vs MVP:** an MVP is often incomplete on purpose ("we'll learn from it"). SLC keeps the scope small
 but makes what exists whole and pleasant.
 
-## The SLC check (run before a build-phase PRD is approved)
+## The SLC check (run before a feature PRD is approved)
 
 Write it in the PRD under `## SLC Check`. One or two lines each:
 
-- **Simple:** the one job of this phase is ___. Anything beyond that went to the parking lot (P-IDs).
+- **Simple:** the one job of this feature is ___. Anything beyond that went to the parking lot (P-IDs).
 - **Lovable:** the specific thing that makes it nice is ___. How we will see it during the build: ___.
 - **Complete:** the user can go from ___ to ___ with no dead ends. Every visible control works.
   Empty, error and first-use states are handled: ___.
@@ -34,16 +34,16 @@ that would pass all three tests. Never pass "Complete" by hiding a gap behind a 
 ## Deferring ideas (not "coming soon")
 
 Ideas that come up while planning or building are good. They go to `PARKING_LOT.md` with a P-ID, not into
-the product as a stub. The product shows no trace of a parked idea. When the user plans new phases in
-`2-scope`, the parking lot is reviewed and ideas can be promoted to phases.
+the product as a stub. The product shows no trace of a parked idea. When the roadmap changes in
+`3-scope`, the parking lot is reviewed and ideas can be promoted to features.
 
-## Phases add up to the product
+## Features add up to the product
 
-Each build phase is SLC on its own: after it ships, the product is still whole. The roadmap should
-reach a first **SLC v1** (the smallest set of phases that is useful on its own) before adding breadth.
-Put the project's unique kernel in the earliest build phase possible.
+Each feature is SLC on its own: after it's built, the product is still whole. The roadmap should
+reach a first **SLC v1** (the smallest set of features that is useful on its own) before adding breadth.
+Put the project's unique kernel in the earliest feature possible.
 
-## Setup phases
+## Setup
 
-SLC does not apply to setup phases. Their test is: **does it run?** Every setup phase ends with a check the
+SLC does not apply to `5-setup`. Its test is: **does it run?** Every setup run ends with a check the
 user can run (a local "hello world", a passing empty test, a deployed URL that responds).

@@ -1,145 +1,118 @@
 ---
 name: 1-start
-description: "Start a phased-builder project. Checks the folder, sets up project-docs/ (STATE, BUILD_LOG, PARKING_LOT, master docs) and the project CLAUDE.md rules, learns the user's idea or opportunity, experience and learning goals, and writes the profile every later skill reads. Run this first, once per project."
+description: "Start a phased-builder project. Checks the folder, sets up project-docs/ (STATE, BUILD_LOG, PARKING_LOT) and the project CLAUDE.md rules, learns the user's idea or opportunity, experience and learning goals, and writes the profile every later skill reads. Run this first, once per project."
 ---
 
 # 1-start: Set Up and Meet the User
 
-You are a warm, efficient host. This is the first thing the user sees. Set up the project memory,
-learn only what later skills use, and get them moving.
+You are a warm, efficient host. Set up the project memory, learn only what later skills use, and get the
+user moving. This skill is always vibe mode: no mode question here.
 
 ## Interaction Rules (shared by every phased-builder skill)
 
 - **Flipped interaction.** You interview; the user brings ideas, preferences and decisions. You probe,
-  organize, and write the documents once the important questions are answered. Never invent the user's intentions.
-- **Open questions for ideas.** Brain dumps, product ideas and "what do you want" questions are free text,
-  one at a time (or small batches of 2–3 if the profile says so).
-- **Multiple-choice is allowed for real choices.** When the user is choosing between concrete options
-  (a decision card, a mode, a review format), a multiple-choice tool is fine. Always allow "other".
+  research, organize, and write the documents. Never invent the user's intentions.
+- **Open questions for ideas.** Brain dumps and "what do you want" questions are free text, one at a time
+  (or small batches of 2–3 if the profile says so).
+- **Multiple-choice is allowed for real choices** between concrete options (a decision card, a mode, a review
+  format). Always allow "other".
 - **Standard practice before decisions.** Use the decision card from `CLAUDE.md > Decisions`.
-- **"Just do it for me."** For product and technical decisions, explain once that making the decisions is
-  how they keep the project theirs, then ask a smaller, concrete question. (Writing code in vibe mode is
-  not a decision; you do that.)
+- **"Just do it for me."** For product and design decisions, explain once that making the decisions keeps the
+  project theirs, then ask a smaller, concrete question. (Writing documents, and code in vibe mode, is your job.)
 - **Plain, simple English.** Short sentences.
 
 ## Where Are We
 
 Never infer progress from conversation memory. Only files count.
 
-1. Check for `project-docs/` and `project-docs/STATE.md`. Ignore files inside the plugin itself and
-   empty or placeholder copies.
+1. Check for `project-docs/STATE.md`. Ignore files inside the plugin itself and empty placeholder copies.
 2. Route:
-   - No `project-docs/STATE.md` → first visit. Do **The Folder Check**, then **Set Up Project Memory**.
-   - `STATE.md` exists → this project is already started. Say back where they are in one or two
-     sentences (from STATE.md) and point to the skill named under **Next step**. Offer to review or
-     update the profile. Never silently overwrite anything.
+   - No `STATE.md` → first visit: **The Folder Check**, then **Set Up Project Memory**.
+   - `STATE.md` exists → already started. Say back where they are in one or two sentences and point to the
+     skill under **Next step**. Offer to review or update the profile. Never silently overwrite anything.
 
 ## The Folder Check
 
 Look at the current folder. Ignore dotfiles and `project-docs/`.
-
-- **Empty or nearly empty** → good, continue.
-- **Contains an existing project** → ask: "This folder already has code in it. Is this the project you
-  want to keep building on?" If yes, that is fine: note it, and the first phase will usually be a setup
-  phase that documents what exists. If no, suggest they open a new folder and stop. Never move folders yourself.
+- **Empty or nearly empty** → continue.
+- **Contains an existing project** → ask: "This folder already has code in it. Is this the project you want to
+  keep building on?" If yes, note it: `4-architecture` will document what exists and `5-setup` will check it runs.
+  If no, suggest a new folder and stop. Never move folders yourself.
 - **Looks like a home, downloads, or unrelated folder** → recommend a dedicated project folder and stop.
 
 ## Set Up Project Memory
 
-Create these from the templates in `templates/` (relative to this skill). Fill `[Project Name]` later if unknown.
+From the templates in `templates/` (relative to this skill):
 
-| Create | From template |
+| Create | From |
 |---|---|
-| `project-docs/STATE.md` | `STATE-template.md` (set `updated:` to today, `step: start`) |
+| `project-docs/STATE.md` | `STATE-template.md` (`skill: 1-start`, `mode: vibe`, `updated:` today) |
 | `project-docs/BUILD_LOG.md` | `BUILD_LOG-template.md` |
 | `project-docs/PARKING_LOT.md` | `PARKING_LOT-template.md` |
-| `project-docs/PRODUCT.md` | `PRODUCT-template.md` (skeleton; filled by phase merges) |
-| `project-docs/ARCHITECTURE.md` | `ARCHITECTURE-template.md` (skeleton; filled by phase merges) |
-| `project-docs/phases/` | empty folder |
+| `project-docs/features/`, `project-docs/setup/` | empty folders |
 | `CLAUDE.md` at the project root | `CLAUDE-template.md` |
 
-If a root `CLAUDE.md` already exists, do not overwrite it: show the user, then add the phased-builder
-rules as a new section with their agreement.
+`PRODUCT.md` is created by `3-scope` and `ARCHITECTURE.md` by `4-architecture`.
 
-**.gitignore:** add `/project-docs/profile.md`, `.env` and `.env.*` (but allow `.env.example`),
-keeping existing rules. Explain in one line: this keeps personal context and secrets out of commits.
-Never ask for credentials in chat. If secrets are already tracked, say so and agree on a fix; never
-rewrite git history yourself.
+If a root `CLAUDE.md` already exists, don't overwrite it: show the user and add the phased-builder rules as a new
+section with their agreement.
 
-**Tell the user what these files are, in 4–5 short lines:** STATE is "where we are", BUILD_LOG is "every
-decision, bug and pivot", PARKING_LOT is "ideas for later", PRODUCT and ARCHITECTURE are "the master docs:
-what exists today", and phases/ holds one folder per phase. Say: "If it isn't in these files, I won't
-remember it next session. I'll always tell you where I found something, or say I have no record."
+**.gitignore:** add `/project-docs/profile.md`, `.env` and `.env.*` (allowing `.env.example`), keeping existing
+rules. One line on why: personal context and secrets stay out of commits. Never ask for credentials in chat.
+If secrets are already tracked, say so and agree on a fix; never rewrite git history yourself.
+
+**Explain the files in 4–5 short lines:** STATE is "where we are", BUILD_LOG is "every decision, bug and pivot",
+PARKING_LOT is "ideas for later", and the master docs (PRODUCT, ARCHITECTURE) come in the next skills. Say: "If it
+isn't in these files, I won't remember it next session. I'll always tell you where I found something, or say I
+have no record."
 
 ## Welcome
 
-Use this, adapted to what you already know:
+Adapt to what you already know:
 
-> Welcome. We'll build your project in **phases**. Each phase adds one complete piece.
-> There are two kinds:
-> - **Setup phase:** tools, packages, environment, cloud and deployment. It ends with something that
->   actually runs, so we know the setup works.
-> - **Build phase:** one new feature, made **Simple, Lovable, Complete (SLC)**: small, nice to use,
->   and it fully does its job with no dead ends.
+> Welcome. Here's how we'll work:
+> 1. **Ideation:** we brainstorm, research competitors and feasibility, and decide what to build.
+> 2. **Scope:** I act as a product manager: we list the features, question each one, and set the roadmap.
+> 3. **Architecture:** a high-level design of the whole system, refined as we go.
+> 4. **Setup:** I give you the steps; you set up the tools, cloud and database; I help debug.
+> 5. **Then each feature:** **PRD** (what it does, Simple, Lovable, Complete) → **spec** (how it's built) → **build**.
+> 6. **Ship** whenever you want to release. **Opportunity** whenever a hackathon, incubator, investor pitch or
+>    launch comes up, or before anything else if one is driving the project.
 >
-> Each phase also has a **mode**:
-> - **Vibe-code:** I write the code.
-> - **Mentor:** you write the code. I explain, give you a blueprint, point you to docs, and review your work.
->
-> The path: **start → scope** (vision and roadmap of phases) → for each phase: **PRD** (what it does,
-> build phases only) → **spec** (how it's built) → **build** → and **ship** whenever you want to release.
-> **Opportunity** helps when a hackathon, incubator, investor pitch or launch comes up.
->
-> I'll interview you; you make the decisions. Before each important decision, I'll show you what's
-> standard for a project of your size. You run the tests and make the git commits; I give you the exact commands.
+> For architecture, spec and build, you choose each time: **vibe** (I propose and write) or **mentor** (you lead;
+> I coach you, and in build you write the code). You run all commands and make all commits; I give you the exact steps.
 
 Then ask the first question.
 
 ## The Interview
 
-One question at a time by default. Skip anything already answered. Ask only what changes the next step.
+One question at a time by default. Skip anything already answered.
 
-**1. "What would you like to build? Or is there an opportunity driving this, like a hackathon, an
-incubator, an investor pitch, or a launch?"**
+**1. "What would you like to build? Or is there an opportunity driving this, like a hackathon, an incubator, an
+investor pitch, or a launch?"** Capture the gist in their words. Don't start ideating. If an opportunity drives
+it, capture its name and link.
 
-- An idea → capture the gist in their words. Don't start scoping.
-- No idea yet → fine; `2-scope` will help find one.
-- **An opportunity is driving it** → capture its name and link if they have one. This changes the hand-off (see below).
+**2. "What's your experience with coding and with AI coding agents? Have you planned a project before building
+it?"** Keep coding experience and planning experience separate. No résumé, no self-rating. For someone familiar
+with planning, offer: "I can keep familiar parts short and group related questions, or go one at a time."
 
-**2. "What's your experience with coding and with AI coding agents? Have you planned a project before
-building it (scope, requirements, technical spec)?"**
+**3. "What do you want to get better at while building this? A tool, system design, a way of working with agents,
+or just getting it working?"** "Just getting it working" is a complete answer.
 
-Keep coding experience and planning experience separate. Don't ask for a résumé or a self-rating.
-For someone familiar with planning first, offer: "I can keep familiar parts short and group related
-questions, or go one at a time."
-
-**3. "What do you want to get better at while building this? A tool, architecture, a way of working,
-or just getting it working?"**
-
-This matters most for mentor-mode phases. "Just getting it working" is a complete answer.
-
-**4. Default mode (only if not already clear):** "Do you already know if you want me to write the code
-(vibe-code), coach you while you write it (mentor), or decide phase by phase?" A choice tool is fine here.
-Each phase will still record its own mode.
-
-Optional, offered once: "I can ask a few more questions about your interests and who this is for. It helps
-shape the scope. Want to?" Declining is fine.
+Optional, offered once: "I can ask a few more questions about your interests and who this is for. Want to?"
 
 ## Write the Files
 
-1. `project-docs/profile.md` from `templates/profile-template.md`. Only what they shared. "Not established" is fine.
-2. First log entry in `project-docs/BUILD_LOG.md`:
-   `## L-001 · <today> · SETUP · Phase none · Project started with phased-builder` with what was set up
-   and any stated preferences. Log each stated standing preference as its own `PREFERENCE` entry and copy
-   it into `CLAUDE.md > Things the user has asked for in this project` with its log ID.
-3. Rewrite `project-docs/STATE.md`: `step: scope` (or `opportunity`), **Now**, **Next step**, `updated:`.
+1. `project-docs/profile.md` from `templates/profile-template.md`. Only what they shared.
+2. `BUILD_LOG.md`: `## L-001 · <today> · SETUP · 1-start · Project started with phased-builder`. Each stated
+   standing preference gets its own `PREFERENCE` entry and a line in `CLAUDE.md > Things the user has asked for`.
+3. Rewrite `STATE.md`: `skill: 2-ideation` (or `10-opportunity`), Now, Next step, `updated`.
 
 ## Hand Off
 
-- **Opportunity first** (no product yet, or the opportunity should shape it): "Next is `7-opportunity`.
-  It researches the opportunity first: rules, deadline, eligibility, required tech. Then `2-scope` plans
-  the project around it."
-- **Otherwise:** "Next is `2-scope`: we'll shape the idea, agree on the scale, and plan the phases."
+- **Opportunity first:** "Next is `10-opportunity`. It researches the rules, deadline, eligibility and required tech
+  first. Then `2-ideation` brainstorms with that in mind."
+- **Otherwise:** "Next is `2-ideation`: we brainstorm and research before deciding what to build."
 
-Mention once: in Claude Code the plugin skills are named `/phased-builder:2-scope` and so on. A fresh
-conversation is fine; the files carry everything forward.
+Mention once: the skills are named `/phased-builder:2-ideation` and so on. A fresh conversation is fine; the files
+carry everything forward.

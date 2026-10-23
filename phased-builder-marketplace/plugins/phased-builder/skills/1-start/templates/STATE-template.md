@@ -1,9 +1,11 @@
 ---
 doc: state
-current_phase: none          # folder name, e.g. 03-build-login, or none
-phase_type: none             # setup | build | none
-mode: none                   # vibe | mentor | none  (hooks read this)
-step: start                  # start | scope | prd | spec | build | review | merge | ship | opportunity
+skill: 1-start               # the skill in progress: 1-start ... 10-opportunity
+current_feature: none        # feature folder in progress, e.g. 03-sand-animation, or none
+mode: vibe                   # vibe | mentor | guide   (hooks read this)
+                             #   vibe   = agent may write code and files
+                             #   mentor = agent writes only project-docs/ and CLAUDE.md (user writes code)
+                             #   guide  = 5-setup: agent writes only project-docs/; user does all setup steps
 long_commands: user          # user | agent  (who runs installs, builds, tests, servers, deploys)
 git: user                    # user | agent  (who runs git add/commit/push)
 updated: YYYY-MM-DD
@@ -14,13 +16,13 @@ updated: YYYY-MM-DD
 # Project State
 
 ## Now
-One or two sentences: what phase and step we are on, and what was just finished.
+One or two sentences: which skill and feature we're on, and what was just finished.
 
 ## Next step
 The single next action, and which skill runs it.
 
 ## Waiting on
-- user: [e.g. run the test command in phases/03-build-login/checklist.md slice 2 and paste output]
+- user: [e.g. run step 4 in setup/01-foundation.md and paste the output]
 - agent: [or nothing]
 
 ## Recent decisions
@@ -30,6 +32,6 @@ The single next action, and which skill runs it.
 ## Open questions
 - [Question] (raised in L-000 or [file > heading])
 
-## Roadmap at a glance
-<!-- Copy of the status column from scope.md > Roadmap. -->
-- 01-setup-[name]: planned
+## Progress
+<!-- Copied from scope.md > Roadmap: done / remaining. -->
+Features: 0 built / 0 planned. Setup runs: 0.

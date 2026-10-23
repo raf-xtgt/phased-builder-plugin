@@ -49,4 +49,4 @@ Y is standard and you can move later. Here's what moving would cost."
 
 Write a `DECISION` entry in `BUILD_LOG.md` right away: what was chosen, the standard practice, options
 considered, and "Decided by: user" (or "user accepted agent recommendation"). Then record it in the
-phase spec or PRD with the log ID.
+document (scope, architecture, PRD or spec) with the log ID.

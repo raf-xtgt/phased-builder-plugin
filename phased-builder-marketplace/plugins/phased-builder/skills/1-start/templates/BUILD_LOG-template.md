@@ -10,7 +10,7 @@ doc: build-log
        BUG          a bug found and how it was fixed
        PIVOT        a change of plan, scope, roadmap, or direction
        SETUP        environment, tools, versions, accounts, cloud, deploy config
-       PHASE        a phase started or finished (summary)
+       FEATURE      a feature started or finished (summary)
        RELEASE      something shipped
        OPPORTUNITY  an opportunity researched or acted on
        PREFERENCE   a standing preference the user stated
@@ -18,7 +18,7 @@ doc: build-log
 
      Format (keep each entry short; link instead of repeating):
 
-## L-001 · YYYY-MM-DD · TYPE · Phase NN-name · Short title
+## L-001 · YYYY-MM-DD · TYPE · [skill] [feature or setup NN, if any] · Short title
 - **What:** one or two lines.
 - **Why:** the reason or evidence.
 - **Standard practice / options:** (DECISION only) what is standard at our scale; options considered.

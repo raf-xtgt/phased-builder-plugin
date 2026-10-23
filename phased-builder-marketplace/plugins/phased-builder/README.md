@@ -1,93 +1,86 @@
 # phased-builder
 
-A Claude Code plugin for building a project in **phases** with **flipped interaction**: the agent
-interviews you, shows you what's standard at your scale, and you make the decisions.
+A Claude Code plugin for building a product plan-first with **flipped interaction**: the agent interviews you,
+researches, shows you what's standard at your scale, and you make the decisions.
 
 Adapted from [challengepost/learn-ai-basics](https://github.com/challengepost/learn-ai-basics)
 (MIT, © 2026 Devpost). See `LICENSE`.
 
-## What it does
-
-- **Unlimited phases.** Each is a **setup** phase (environment, packages, cloud, deploy; ends with
-  something that runs) or a **build** phase (one complete feature, checked against **SLC**: Simple,
-  Lovable, Complete).
-- **Two modes per phase.** **Vibe-code:** the agent writes the code. **Mentor:** you write the code; the
-  agent gives blueprints, doc links, reviews, and small general examples only when you ask.
-- **You run the commands and make the commits** in both modes. The agent gives exact commands and
-  expected output, then waits for you to paste the result.
-- **Shared memory in files.** `STATE.md`, an add-only `BUILD_LOG.md`, a `PARKING_LOT.md` for ideas,
-  and master docs (`PRODUCT.md`, `ARCHITECTURE.md`) that are updated at the end of every phase.
-  The agent must cite where it found a past decision, or say it has no record.
-- **Opportunities.** Research and adapt to hackathons (any organizer, with a depth check on sponsor
-  tech), incubators, investor pitches, and social launches on X, Discord and LinkedIn.
-
 ## The skills
 
-| Skill | When |
-|---|---|
-| `/phased-builder:1-start` | Once per project. Sets up `project-docs/` and `CLAUDE.md`. |
-| `/phased-builder:2-scope` | Vision, scale, roadmap. Run again to change the roadmap. |
-| `/phased-builder:3-prd` | Each build phase: what the feature does + SLC check. |
-| `/phased-builder:4-spec` | Each phase: how it's built (setup or build). |
-| `/phased-builder:5-build` | Each phase: slices, checks, final review, merge into master docs. |
-| `/phased-builder:6-ship` | Any time after a phase: release, deploy, README, changelog. |
-| `/phased-builder:7-opportunity` | Any time, or before anything is built. |
+| Skill | Job | When | Modes |
+|---|---|---|---|
+| `/phased-builder:1-start` | Get to know you; set up `project-docs/` and `CLAUDE.md` | Once per project | vibe |
+| `/phased-builder:2-ideation` | Brainstorm, alternatives, competitor and market research, feasibility, opportunity fit | Once, to decide what to build | vibe |
+| `/phased-builder:3-scope` | Product manager: feature list, scrutiny, parking lot, scale, `PRODUCT.md`, roadmap checklist | After ideation; again to change the roadmap | vibe |
+| `/phased-builder:4-architecture` | High-level system design: components, data, AI, database, cloud, cost, folders | Draft once; refine any time | vibe or mentor |
+| `/phased-builder:5-setup` | Stack, dependencies, dev tools, database, cloud. **You do the steps; the agent guides and debugs** | Main setup once; add-ons any time | guide |
+| `/phased-builder:6-prd` | One feature: journey, behaviors, criteria, SLC check | Each feature | vibe |
+| `/phased-builder:7-spec` | How the feature is built (agent writes the spec in both modes) | Each feature | vibe or mentor |
+| `/phased-builder:8-build` | Slices, checks, final review, merge into master docs | Each feature | vibe or mentor |
+| `/phased-builder:9-ship` | Release: checks, secrets, README, changelog, deploy | After any feature | vibe |
+| `/phased-builder:10-opportunity` | Hackathon, incubator, investor pitch, social launch | Any time, or first | vibe |
 
 ```
-1-start → 2-scope → for each phase:  setup: 4-spec → 5-build
-                                      build: 3-prd → 4-spec → 5-build
-          6-ship and 7-opportunity whenever needed
+1-start → 2-ideation → 3-scope → 4-architecture → 5-setup → per feature: 6-prd → 7-spec → 8-build
+          10-opportunity first if one drives the project · 9-ship after any feature
+          3-scope, 4-architecture, 5-setup can be re-run whenever things change
 ```
+
+**Modes** (asked every time `4-architecture`, `7-spec` or `8-build` starts):
+- **Vibe:** the agent proposes and writes (code too, in `8-build`).
+- **Mentor:** you lead. In architecture and spec, the agent coaches you on system design (standards, trade-offs,
+  costs) and then writes the document. In build, you write all the code; the agent gives blueprints, doc links,
+  reviews, and small general examples only when asked.
+
+**You run every install, test, server and deploy command, and make every commit,** in every skill. The agent gives
+exact commands and expected output, then waits for you to paste the result.
+
+**Opportunities:** a brief from `10-opportunity` feeds ideation, scope, and especially architecture and spec, which
+design for maximum impact (judging criteria, deep vs shallow use of required tech, the demo moment) without bending
+the product away from its users.
 
 ## What it creates in your project
 
 ```
-CLAUDE.md                 working rules (loaded every session)
+CLAUDE.md                     working rules (loaded every session)
 project-docs/
-├── STATE.md              where we are now (loaded every session by a hook)
-├── scope.md              vision, scale, roadmap
-├── PRODUCT.md            master: the product today
-├── ARCHITECTURE.md       master: the system today
-├── BUILD_LOG.md          decisions, bugs, pivots (add-only, L-001...)
-├── PARKING_LOT.md        ideas for later (P-001...)
-├── profile.md            your context (git-ignored)
-├── phases/NN-type-name/  prd.md, spec.md, checklist.md
-└── opportunities/<name>/ brief.md, research.md, drafts/
+├── STATE.md                  where we are now (loaded every session by a hook)
+├── ideation.md               brainstorm, research, decision
+├── PRODUCT.md                master: problem, solution, users, features with status
+├── scope.md                  scale, SLC, feature review, roadmap checklist
+├── ARCHITECTURE.md           master: the system design, refined over time
+├── setup/NN-name.md          each setup run: steps, issues, proof it works
+├── features/NN-name/         prd.md, spec.md, checklist.md
+├── BUILD_LOG.md              decisions, bugs, pivots (add-only, L-001...)
+├── PARKING_LOT.md            ideas for later (P-001...)
+├── profile.md                your context (git-ignored)
+└── opportunities/<name>/     brief.md, research.md, drafts/
 ```
 
 ## Hooks (need `python3` on your PATH)
 
-Both hooks do nothing in projects without `project-docs/STATE.md`.
+Both do nothing in projects without `project-docs/STATE.md`.
 
-- **SessionStart** (startup, resume, clear, and after a compaction): adds `STATE.md` and the latest
-  log entry titles to the agent's context, plus a note after compaction that unlogged details may be lost.
+- **SessionStart** (startup, resume, clear, after compaction): adds `STATE.md` and the latest log titles to the
+  agent's context, plus a warning after compaction that anything not logged may be lost.
 - **PreToolUse** guard, reading `STATE.md`:
-  - `mode: mentor` → blocks edits to project files outside `project-docs/` and `CLAUDE.md`, and shell
+  - `mode: mentor` or `mode: guide` → blocks edits to project files outside `project-docs/` and `CLAUDE.md`, and shell
     commands that write, move or delete project files.
-  - `long_commands: user` (default) → blocks installs, builds, tests, dev servers and deploys, so the agent
-    hands them to you instead of waiting on them.
+  - `long_commands: user` (default) → blocks installs, builds, tests, dev servers and deploys (`--version` checks allowed).
   - `git: user` (default) → blocks git commands that change state. Read-only git is allowed.
 
-**Limits, plainly:**
-- The shell checks are pattern-based. An unusual command can slip past; the written rules cover the rest.
-- The agent could edit `STATE.md` to switch modes. The rules forbid it without your say-so, and the
-  log would show it, but a hook can't stop it.
-- There is no reliable hook to force a log update *before* compaction, so the rule is "log at the moment
-  of the decision", plus the after-compaction reminder.
-- To let the agent run long commands or git in a project, set `long_commands: agent` or `git: agent` in
-  `STATE.md`.
+**Limits, plainly:** shell checks are pattern-based, so an unusual command can slip past (the written rules cover
+the rest); the agent could edit `mode:` in `STATE.md` itself (the rules forbid it, but a hook can't stop it); there's
+no reliable hook to force a log update before compaction. To let the agent run long commands or git, set
+`long_commands: agent` or `git: agent` in `STATE.md`.
 
 ## Install
 
-**Try it for one session:**
-```bash
-claude --plugin-dir /path/to/phased-builder
-```
-
-**Install permanently (local marketplace):** see the README one folder up, or:
 ```bash
 claude plugin marketplace add /path/to/phased-builder-marketplace
 claude plugin install phased-builder@phased-builder-marketplace
 ```
 
+Try without installing: `claude --plugin-dir /path/to/phased-builder-marketplace/plugins/phased-builder`.
 Then open your project folder and run `/phased-builder:1-start`.

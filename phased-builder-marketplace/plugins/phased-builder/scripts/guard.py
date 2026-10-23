@@ -3,7 +3,8 @@
 
 Rules (read from the frontmatter of project-docs/STATE.md):
   mode: mentor        -> block edits to project files outside project-docs/ and CLAUDE.md,
-                         and block shell commands that write or move project files.
+                         and block shell commands that write or move project files (8-build: user writes code).
+  mode: guide         -> same blocks (5-setup: the user does every setup step).
   long_commands: user -> block installs, builds, tests, dev servers, deploys (default).
   git: user           -> block git commands that change state; read-only git is allowed (default).
 
@@ -96,9 +97,14 @@ def tokens_of(segment):
     return toks
 
 
+VERSION_FLAGS = {"--version", "-v", "-V", "version", "--help", "-h", "help"}
+
+
 def long_command_hit(toks):
     if not toks:
         return None
+    if len(toks) == 2 and toks[1] in VERSION_FLAGS:
+        return None  # quick read-only checks like `flutter --version`
     first = os.path.basename(toks[0]) if not toks[0].startswith("./") else toks[0]
     second = next((t for t in toks[1:] if not t.startswith("-")), "")
     if first in LONG_COMMANDS:
@@ -165,20 +171,24 @@ def main():
         return 0
     fm = read_frontmatter(spath) or {}
     mode = fm.get("mode", "")
-    phase = fm.get("current_phase", "") or "the current phase"
+    restricted = mode in ("mentor", "guide")
+    where = fm.get("current_feature", "") or ""
+    if mode == "guide":
+        who = "5-setup is running (guide mode): the user does every setup step"
+    else:
+        who = f"Mentor mode is on{(' for ' + where) if where and where != 'none' else ''}: the user writes the code and project files"
     tool = hook_input.get("tool_name", "")
     tin = hook_input.get("tool_input", {}) or {}
 
     if tool in ("Write", "Edit", "MultiEdit", "NotebookEdit"):
-        if mode != "mentor":
+        if not restricted:
             return 0
         path = tin.get("file_path") or tin.get("notebook_path") or ""
         if not is_allowed_doc_path(path, root):
             deny(
-                f"Mentor mode is on for {phase} (project-docs/STATE.md). The user writes the code and "
-                f"project files; the agent may only edit project-docs/ and CLAUDE.md. Blocked: {path}. "
-                "Give a blueprint, doc links, review comments, or (only if asked) a small general example "
-                "in chat. Switching to vibe-code mode requires the user to say so in chat."
+                f"{who} (project-docs/STATE.md). The agent may only edit project-docs/ and CLAUDE.md here. "
+                f"Blocked: {path}. Show the user the exact content and path, or give steps, "
+                "a blueprint, doc links or review comments instead. Only the user can change the mode, in chat."
             )
         return 0
 
@@ -207,12 +217,12 @@ def main():
                     "pass/fail rule. Then stop and wait for them to paste the output."
                 )
 
-    if mode == "mentor":
+    if restricted:
         hit = mentor_bash_hit(command, toks_list, root)
         if hit:
             deny(
-                f"Mentor mode is on for {phase}. Shell commands that create, change, move or delete project "
-                f"files are blocked ({hit}). The user makes those changes; explain what to do instead."
+                f"{who}. Shell commands that create, change, move or delete project files are blocked "
+                f"({hit}). The user makes those changes; give them the exact steps instead."
             )
     return 0
 
