@@ -39,7 +39,7 @@ feature come later in `7-spec`.
 3. **Data design:** entities, database type, where data lives.
 4. **AI components** if any.
 5. **Cloud and infrastructure,** **security,** and a **cost estimate** (search current pricing; cite).
-6. **Stack** choices, each with a decision card. Check maintenance status and versions (search; cite).
+6. **Stack** choices, each with a decision card, then a **capability check** for every tool (see below).
 7. **Project folder structure** (framework convention first).
 8. **Opportunity impact** (if a brief is active): follow `shared/opportunity-impact.md` for the whole system.
 9. **Setup needs:** the list `5-setup` will work through.
@@ -50,10 +50,26 @@ trade-offs and costs (`shared/system-design-mentor.md`). They decide.
 
 Log each `DECISION` when it's made. New ideas → PARKING_LOT.
 
+## Capability Check (required before the review)
+For every framework, library, service and platform API in the stack, read its **text documentation** (official
+docs, package page, platform docs; search, open the page, read it) and fill one row of
+`ARCHITECTURE.md > Stack > Capability Check`:
+
+| Tool | Version (current stable) | Capability we need | Supported per docs? | Platform / SDK requirements | Works with the rest of the stack? | Limits, permissions, cost | Source (date) |
+|---|---|---|---|---|---|---|---|
+
+- Confirm **what it can do** and **whether that's usable for this product**: the platform (e.g. Android version),
+  minimum SDK/runtime/build-tool versions, compatibility with the other chosen tools, required permissions or
+  store policies, limits and pricing.
+- **Not at this stage:** code snippets, wiring, GitHub issues, bug threads. Those belong in `7-spec`, per feature.
+- **"Not verified"** is only for what the docs genuinely don't answer (say what you looked at and what's missing).
+  Never use it for a check that was skipped. If a check fails or conflicts, say so and revisit the choice now,
+  before setup.
+
 ## Refine
 1. Name what's changing and why. Read the relevant `ARCHITECTURE.md` sections and any affected feature specs.
 2. Work through only the affected areas, in the chosen mode. Adding or removing tech: reason, migration effort,
-   cost to undo, effect on built features.
+   cost to undo, effect on built features. New tools get a Capability Check row.
 3. If an opportunity is driving the change, run `shared/opportunity-impact.md`.
 4. Update `ARCHITECTURE.md` in place: mark (planned) vs (built); add new `Setup Needs` items. Log `DECISION` or
    `PIVOT` entries.
@@ -65,7 +81,8 @@ From `templates/ARCHITECTURE-template.md` (first run, `status: draft`) or update
 ## The Review
 - Review Format: Markdown, or an optional HTML companion `project-docs/architecture.html` with the system diagram,
   data flow, and cost table; no build step; Markdown canonical.
-- Two to four sentences of honest feedback: right size for the scale, biggest risk, biggest cost, anything unverified.
+- Honest feedback as a short table (Size · Biggest risk · Biggest cost · Not verified). Only new points; don't
+  restate settled trade-offs.
 - Ask once: "Does this look good, or would you change anything?" "Looks good" approves it (`status: approved`).
   In mentor mode, end with one sentence naming the system-design idea from this session most worth remembering.
 

@@ -23,10 +23,10 @@ Commands run by: user · Commits by: user
   PRD ref: `prd.md > The Journey` (steps 1–3)
   Spec ref: `spec.md > Components`, `spec.md > Wiring Blueprint`
   Build: Entry form component, in-memory list, render newest first.
-  You run: `npm run dev`, then open http://localhost:3000
+  You run: from `<repo>/`: `npm run dev`, then open http://localhost:3000
   Pass when: Server starts with no errors; a submitted entry appears at the top of the list.
   Try it: Add two entries and say whether it looks and feels the way you pictured it.
-  Commit: `git add src/components/EntryForm.tsx src/app/page.tsx project-docs/features/NN-name/checklist.md` then `git commit -m "Add entry form and live list"`
+  Commit: from `<repo>/`: `git add src/components/EntryForm.tsx src/app/page.tsx` then `git commit -m "Add entry form and live list"`
 
 <!-- Continue for as many slices as the feature needs. No target count. -->
 
@@ -47,7 +47,6 @@ Commands run by: user · Commits by: user
 - [ ] `BUILD_LOG.md`: `FEATURE` summary entry written
 - [ ] Parking lot items from this feature shown to the user
 - [ ] `STATE.md` points to the next step
-- [ ] User committed the doc updates
 
 ## Optional: Learning Wrap-Up and App Map
 

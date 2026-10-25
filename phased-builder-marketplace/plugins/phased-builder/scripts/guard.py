@@ -2,9 +2,8 @@
 """PreToolUse hook for phased-builder projects.
 
 Rules (read from the frontmatter of project-docs/STATE.md):
-  mode: mentor        -> block edits to project files outside project-docs/ and CLAUDE.md,
+  mode: mentor        -> block edits to project files outside project-docs/, CLAUDE.md and SETUP.md,
                          and block shell commands that write or move project files (8-build: user writes code).
-  mode: guide         -> same blocks (5-setup: the user does every setup step).
   long_commands: user -> block installs, builds, tests, dev servers, deploys (default).
   git: user           -> block git commands that change state; read-only git is allowed (default).
 
@@ -84,7 +83,9 @@ def is_allowed_doc_path(path, root):
         return True  # outside the project (scratch files etc.) is not project code
     if inside(abs_path, os.path.join(root, DOCS_DIR)):
         return True
-    return os.path.realpath(abs_path) == os.path.realpath(os.path.join(root, "CLAUDE.md"))
+    return os.path.realpath(abs_path) in {
+        os.path.realpath(os.path.join(root, name)) for name in ("CLAUDE.md", "SETUP.md")
+    }
 
 
 def tokens_of(segment):
@@ -171,12 +172,9 @@ def main():
         return 0
     fm = read_frontmatter(spath) or {}
     mode = fm.get("mode", "")
-    restricted = mode in ("mentor", "guide")
+    restricted = mode == "mentor"
     where = fm.get("current_feature", "") or ""
-    if mode == "guide":
-        who = "5-setup is running (guide mode): the user does every setup step"
-    else:
-        who = f"Mentor mode is on{(' for ' + where) if where and where != 'none' else ''}: the user writes the code and project files"
+    who = f"Mentor mode is on{(' for ' + where) if where and where != 'none' else ''}: the user writes the code and project files"
     tool = hook_input.get("tool_name", "")
     tin = hook_input.get("tool_input", {}) or {}
 
@@ -186,7 +184,7 @@ def main():
         path = tin.get("file_path") or tin.get("notebook_path") or ""
         if not is_allowed_doc_path(path, root):
             deny(
-                f"{who} (project-docs/STATE.md). The agent may only edit project-docs/ and CLAUDE.md here. "
+                f"{who} (project-docs/STATE.md). The agent may only edit project-docs/, CLAUDE.md and SETUP.md here. "
                 f"Blocked: {path}. Show the user the exact content and path, or give steps, "
                 "a blueprint, doc links or review comments instead. Only the user can change the mode, in chat."
             )
@@ -203,8 +201,9 @@ def main():
             if hit:
                 deny(
                     f"In this project the user makes all git changes ({hit} blocked). Give the user the exact "
-                    "commands to run (list files to stage explicitly; no blanket `git add .`), then wait for "
-                    "them to confirm. Read-only git commands (status, log, diff, show) are allowed."
+                    "commands to run from the repo folder (list repo files explicitly; no blanket `git add .`; "
+                    "never project-docs/, CLAUDE.md or SETUP.md), then wait for them to confirm. Read-only git "
+                    "commands (status, log, diff, show) are allowed. Never create or init a repo."
                 )
 
     if fm.get("long_commands", "user") != "agent":
@@ -213,8 +212,9 @@ def main():
             if hit:
                 deny(
                     f"In this project the user runs installs, builds, tests, dev servers and deploys "
-                    f"(`{hit}` blocked). Give the user: the exact command(s), what output to expect, and the "
-                    "pass/fail rule. Then stop and wait for them to paste the output."
+                    f"(`{hit}` blocked). Give the user: the folder, the exact command(s), what output to expect, "
+                    "and the pass/fail rule. Then stop and wait for them to paste the output. (Config file edits "
+                    "are yours to make in vibe mode.)"
                 )
 
     if restricted:

@@ -1,7 +1,8 @@
 # Setup Patterns: Agent Reference
 
-Used by `5-setup`. The user does every setup step; you plan the steps, explain them, and debug. A setup run is done
-only when something **runs** and the user has checked it.
+Used by `5-setup`. The user runs commands and installs and does console steps; you edit the config files, plan the
+steps, and debug. A setup run is done only when something **runs** and the user has checked it. The repo already
+exists (the user created it); no `git init`.
 
 ## The walking skeleton (standard practice for the main setup)
 The first setup run usually ends with a "walking skeleton": the thinnest version of the real system running end to
@@ -17,8 +18,8 @@ Check current versions, prices and region availability by searching; cite.
 3. **Framework and starter:** the official CLI or starter (e.g. `flutter create`, `npm create vite@latest`).
    Say what it generates.
 4. **Project structure:** as in `ARCHITECTURE.md > Project Folder Structure`.
-5. **Config and secrets:** env var names; `.env` git-ignored; `.env.example` with placeholders; host secret store for
-   deployed values. Never secrets in client-side code.
+5. **Config and secrets:** env var names; `.env` rules in `<repo>/.gitignore` (you add them); `.env.example` with
+   placeholders (you write it); host secret store for deployed values. Never secrets in client-side code.
 6. **Formatter and linter:** ecosystem default, set up once.
 7. **Test runner:** ecosystem default, with one passing sample test.
 8. **Database:** local dev database or managed free tier; how to create it, connect, run the first migration.
@@ -27,11 +28,13 @@ Check current versions, prices and region availability by searching; cite.
 11. **Dev tools:** editor extensions, emulators/simulators, CLIs the stack needs.
 
 ## Writing steps the user can follow
-- Exact commands for their OS and shell. Ask the OS once.
+- Mark each step **Who:** user (commands, installs, console clicks), agent (file edits), or both.
+- Agent steps: edit the files directly. Read generated files first (e.g. after `flutter create`) and edit what's
+  there; don't overwrite generated content blindly. Say in one line which files changed.
+- Exact commands for their OS and shell, starting with the folder (`cd <repo>`). Ask the OS once.
 - UI steps (cloud consoles, app stores, dashboards): menu path, button names, what to enter, what to choose, and
   what the screen shows after. Say these UIs change often; if theirs looks different, ask for a screenshot.
-- Files the user creates: full content in a code block with the exact path.
-- Each step: Do / Files you create / Expect / Pass when.
+- Each step: Who / Agent edits / User does / Expect / Pass when.
 - Order so later steps can't fail because of an earlier unchecked step.
 
 ## Debugging setup errors

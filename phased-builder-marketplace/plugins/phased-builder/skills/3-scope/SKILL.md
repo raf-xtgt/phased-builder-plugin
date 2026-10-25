@@ -34,10 +34,11 @@ matters goes into the first version. Everything else is saved for later, not los
 1. **Collect candidate features.** Start from `ideation.md > Decision`. Ask: "List every feature you imagine,
    big and small." Add obvious ones they missed (first-use, settings, empty states) as questions, not additions.
 2. **Problem statement and users.** Confirm the pain points and target users for `PRODUCT.md`, in their words.
-3. **Scrutinize each feature** with `references/pm-scrutiny.md`. Give your honest verdict (must-have v1 / later /
-   cut) with a reason; the user decides. Park "later" items immediately with P-IDs and say so.
+3. **Scrutinize each feature** with `references/pm-scrutiny.md`. Show verdicts as **one table** (Feature · Pain it
+   solves · Verdict · Reason), then ask which rows they'd change. The user decides. Park "later" items with P-IDs.
    With an opportunity: judge features against the brief too, and say plainly when a feature exists only for judges.
-4. **Scale.** Ask the `scope.md > Scale` questions.
+4. **Scale.** First fill what's already answered in `profile.md`, `ideation.md` and the log. Ask only the
+   missing items, in one short list. Never re-ask an answered one (e.g. "no deadline" stays settled).
 5. **SLC for the whole product.** Simple, Lovable, Complete for v1.
 6. **Roadmap.** Order the must-haves; draw the SLC v1 line. Show it as a short list and adjust with the user.
 
@@ -54,7 +55,8 @@ Don't plan architecture or setup here; those are `4-architecture` and `5-setup`.
 - If `profile.md > Review Format` is unset, ask once (choice tool): "Review here in Markdown, or also as a visual
   HTML page?" Save it. For HTML, write `project-docs/scope.html`: problem → solution → features diagram, the
   roadmap as a timeline with the SLC v1 line; no build step; Markdown stays the source of truth.
-- Two to four sentences of honest feedback: is v1 small enough, is the kernel early, is anything still vague.
+- Honest feedback in 2–3 bullets: is v1 small enough, is the kernel early, what's still vague. Only new points:
+  don't restate trade-offs the user already accepted (e.g. time or deadline once settled).
 - Ask once: "Does this look good, or would you change anything?" "Looks good" approves both documents.
 
 ### On approval

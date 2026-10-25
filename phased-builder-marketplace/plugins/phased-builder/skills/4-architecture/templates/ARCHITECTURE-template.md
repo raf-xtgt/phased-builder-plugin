@@ -3,8 +3,9 @@ doc: architecture
 status: draft                # draft | approved (first approval by 4-architecture; later refinements keep it approved)
 ---
 <!-- MASTER DOC: the system design. Started high-level by `4-architecture`, refined by re-running it and by each
-     feature's `7-spec` (merged in `8-build`). `5-setup` fills Environment, How to Run and How to Test with what
-     actually worked. Mark anything not built yet as (planned). Keep headings stable: specs cite them. -->
+     feature's `7-spec` (merged in `8-build`). `5-setup` fills Environment and Tooling with what actually worked.
+     Step-by-step setup, run, test and deploy instructions live in SETUP.md (parent folder), not here.
+     Mark anything not built yet as (planned). Keep headings stable: specs cite them. -->
 
 # [Project Name]: Architecture
 
@@ -48,6 +49,11 @@ Authentication, authorization, secrets handling, personal data, input validation
 ## Stack
 Language, framework, key libraries and services, with versions and doc links. One line of reason each (L-ID).
 
+### Capability Check
+<!-- From each tool's text documentation. "Not verified" only when the docs don't answer it. -->
+| Tool | Version | Capability we need | Supported per docs? | Platform / SDK requirements | Works with the rest? | Limits, permissions, cost | Source (date) |
+|---|---|---|---|---|---|---|---|
+
 ## Project Folder Structure
 Annotated tree of the planned (and later, real) folders.
 
@@ -63,14 +69,9 @@ Where the required tech sits, depth-check verdicts and decisions (L-IDs), the de
 <!-- Filled by 5-setup with what actually worked. -->
 Runtime versions, package manager, formatter, linter, test runner, env var names (never values).
 
-## How to Run Locally
-<!-- Filled by 5-setup. Exact commands and what you should see. -->
-
-## How to Test
-<!-- Filled by 5-setup. Exact commands and what passing looks like. -->
-
-## Deployment
-Where it runs, how to deploy and roll back. (Filled by 5-setup / 9-ship.)
+## Setup, Run, Test and Deploy
+See `SETUP.md` in the parent folder (private) and `<repo>/SETUP_EXAMPLE.md` (public copy). Not repeated here.
+Where the system runs is described under **Cloud and Infrastructure**.
 
 ## Known Risks and Tech Debt
 Each with an L-ID or P-ID.

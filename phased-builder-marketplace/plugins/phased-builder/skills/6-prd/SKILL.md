@@ -56,7 +56,7 @@ Save immediately.
 
 ## The Review
 - Review Format: Markdown, or optional HTML `prd.html` (journey diagram, reveals per behavior); Markdown canonical.
-- Two to four sentences of honest feedback: is the journey whole, are criteria checkable, does SLC really pass.
+- Honest feedback in 2–3 bullets: is the journey whole, are criteria checkable, does SLC really pass. New points only.
 - Ask once: "Does this look good, or would you change anything?" "Looks good" approves it.
 
 ## On Approval

@@ -19,7 +19,9 @@ user moving. This skill is always vibe mode: no mode question here.
 - **Standard practice before decisions.** Use the decision card from `CLAUDE.md > Decisions`.
 - **"Just do it for me."** For product and design decisions, explain once that making the decisions keeps the
   project theirs, then ask a smaller, concrete question. (Writing documents, and code in vibe mode, is your job.)
-- **Plain, simple English.** Short sentences.
+- **Short, plain responses; tables for long ones; no repeating settled points.** Follow `CLAUDE.md > How to write
+  responses` and `CLAUDE.md > Settled points` (in this skill, before CLAUDE.md exists, follow
+  `templates/CLAUDE-template.md`).
 
 ## Where Are We
 
@@ -33,12 +35,23 @@ Never infer progress from conversation memory. Only files count.
 
 ## The Folder Check
 
-Look at the current folder. Ignore dotfiles and `project-docs/`.
-- **Empty or nearly empty** → continue.
-- **Contains an existing project** → ask: "This folder already has code in it. Is this the project you want to
-  keep building on?" If yes, note it: `4-architecture` will document what exists and `5-setup` will check it runs.
-  If no, suggest a new folder and stop. Never move folders yourself.
-- **Looks like a home, downloads, or unrelated folder** → recommend a dedicated project folder and stop.
+Expected layout: Claude Code runs in a **parent folder** that holds exactly **one repo folder** (a GitHub repo the
+user already created and cloned). `project-docs/`, `CLAUDE.md` and `SETUP.md` go in the parent, outside git.
+
+```
+<parent>/          <- current folder
+└── <repo>/        <- the user's cloned GitHub repo
+```
+
+Check read-only (`ls`, `git -C <dir> status`, `git -C <dir> remote -v`). Never create, init or clone a repo yourself.
+
+| What you find | Do |
+|---|---|
+| Exactly one subfolder that is a git repo | Good. Record its name as `repo:` in STATE.md. If it already has code, note it: `4-architecture` documents what exists. |
+| The current folder is itself a git repo | Say: "Run me from the folder *above* your repo, so project-docs stays out of git." Stop. |
+| No repo subfolder | Ask the user to clone their GitHub repo into this folder and tell you its name. Stop until they do. |
+| More than one repo subfolder | Ask which one is this project's repo (one repo per parent folder). |
+| A home, downloads, or unrelated folder | Recommend a dedicated parent folder. Stop. |
 
 ## Set Up Project Memory
 
@@ -50,16 +63,15 @@ From the templates in `templates/` (relative to this skill):
 | `project-docs/BUILD_LOG.md` | `BUILD_LOG-template.md` |
 | `project-docs/PARKING_LOT.md` | `PARKING_LOT-template.md` |
 | `project-docs/features/`, `project-docs/setup/` | empty folders |
-| `CLAUDE.md` at the project root | `CLAUDE-template.md` |
+| `CLAUDE.md` in the parent folder | `CLAUDE-template.md` |
 
 `PRODUCT.md` is created by `3-scope` and `ARCHITECTURE.md` by `4-architecture`.
 
-If a root `CLAUDE.md` already exists, don't overwrite it: show the user and add the phased-builder rules as a new
-section with their agreement.
+If a `CLAUDE.md` already exists in the parent folder, don't overwrite it: show the user and add the phased-builder
+rules as a new section with their agreement.
 
-**.gitignore:** add `/project-docs/profile.md`, `.env` and `.env.*` (allowing `.env.example`), keeping existing
-rules. One line on why: personal context and secrets stay out of commits. Never ask for credentials in chat.
-If secrets are already tracked, say so and agree on a fix; never rewrite git history yourself.
+Nothing in the parent folder is committed, so no `.gitignore` changes are needed here (`5-setup` adds `.env` rules
+to the repo's `.gitignore`). Never ask for credentials in chat.
 
 **Explain the files in 4–5 short lines:** STATE is "where we are", BUILD_LOG is "every decision, bug and pivot",
 PARKING_LOT is "ideas for later", and the master docs (PRODUCT, ARCHITECTURE) come in the next skills. Say: "If it
@@ -80,7 +92,8 @@ Adapt to what you already know:
 >    launch comes up, or before anything else if one is driving the project.
 >
 > For architecture, spec and build, you choose each time: **vibe** (I propose and write) or **mentor** (you lead;
-> I coach you, and in build you write the code). You run all commands and make all commits; I give you the exact steps.
+> I coach you, and in build you write the code). You run all commands and make all commits; I give you the exact
+> steps and edit the config files. Project docs stay in this parent folder, outside your repo.
 
 Then ask the first question.
 

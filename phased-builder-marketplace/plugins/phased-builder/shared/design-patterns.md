@@ -56,7 +56,14 @@ can't verify, say so and add it to Open Issues to check early. Keep keys server-
 Rough monthly cost at launch and at the 12-month user number. Search current pricing; cite with date. Call out the
 biggest line (often AI calls or bandwidth) and the free-tier cliff.
 
+## Research depth: architecture vs spec
+| Stage | Research | Not yet |
+|---|---|---|
+| `4-architecture` | Each tool's text docs: what it can do, platform and version requirements, compatibility with the rest of the stack, permissions, limits, cost. Filled in the Capability Check table. | Code snippets, wiring, GitHub issues |
+| `7-spec` | For this feature: API reference pages, code-level usage and wiring, known issues (GitHub issues, changelogs, migration guides), edge cases | — |
+
 ## Self-review before showing a design
 Every feature it must serve has a home; no contradictions between components, data and folders; size fits the
-scale; failure points have fallbacks; costs are sourced; every cited heading exists. Fix internal issues yourself;
+scale; failure points have fallbacks; costs are sourced; every cited heading exists; (architecture) every tool has
+a Capability Check row with a source. Fix internal issues yourself;
 ask the user only about consequential gaps.

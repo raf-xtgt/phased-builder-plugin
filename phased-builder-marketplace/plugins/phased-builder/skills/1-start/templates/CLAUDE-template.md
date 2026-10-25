@@ -1,10 +1,21 @@
 # [Project Name]: Working Rules (phased-builder)
 
-<!-- Copied into the project root by `1-start`. Claude Code loads this file at the start of
-     every session. Keep it short: rules here, facts in project-docs/. -->
+<!-- Copied into the parent folder by `1-start`. Claude Code loads this file at the start of
+     every session. Keep it short: rules here, facts in project-docs/. Not committed to git. -->
 
 This project is built with the phased-builder plugin. Project memory lives in `project-docs/`.
 Chat memory is not reliable: if it is not written in these files, assume it is forgotten.
+
+## Folder layout
+```
+<parent>/              <- Claude Code runs here. Nothing in this folder is in git...
+├── CLAUDE.md          this file
+├── SETUP.md           private setup, run and deploy steps (may hold real IDs and keys)
+├── project-docs/      project memory
+└── <repo>/            ...except this: the one GitHub repo (name in STATE.md > repo). The user created it.
+    └── SETUP_EXAMPLE.md   SETUP.md with dummy values (committed)
+```
+Never commit `project-docs/`, `CLAUDE.md` or `SETUP.md`. Never create, init or re-clone the repo.
 
 ## The flow
 `1-start` → `2-ideation` → `3-scope` → `4-architecture` → `5-setup` → for each feature:
@@ -30,6 +41,7 @@ Chat memory is not reliable: if it is not written in these files, assume it is f
 | `project-docs/PRODUCT.md` | MASTER: problem, solution, target users, features with status (planned / in progress / built). |
 | `project-docs/scope.md` | Scale, the product's SLC, the roadmap checklist, what's out. |
 | `project-docs/ARCHITECTURE.md` | MASTER: the system design, high level first, refined over time. |
+| `SETUP.md` (parent folder) | One-time setup, run locally, deploy. Private. `<repo>/SETUP_EXAMPLE.md` is the public copy. |
 | `project-docs/setup/NN-name.md` | One setup run: steps the user did and what happened. |
 | `project-docs/features/NN-name/` | One feature: `prd.md`, `spec.md`, `checklist.md`. |
 | `project-docs/BUILD_LOG.md` | Add-only record of decisions, bugs, pivots, setup, releases. |
@@ -55,15 +67,18 @@ If `project-docs/opportunities/` has an active brief, ideation, scope, architect
 ## Ideas that come up mid-work
 Do not add them to the current work. Save them to `PARKING_LOT.md` with the next `P-` number and keep going.
 
-## Commands, setup and git
-- `long_commands: user`: the user runs installs, builds, tests, dev servers and deploys. Give the exact command,
-  expected output, and pass/fail rule. Then stop and wait for the pasted output. Never poll or wait on long processes.
-- Setup (`5-setup`): the user does every step (commands, config files, cloud consoles). The agent gives steps and
-  debugs from what the user pastes. It does not write project files.
-- `git: user`: the user makes all git changes. Give exact commands with files listed. Read-only git is fine.
+## Commands, files and git
+- **The user runs** installs, builds, tests, dev servers, deploys and code generators (`long_commands: user`), and
+  clicks through cloud consoles. Give the exact command (and folder), expected output, and pass/fail rule. Then stop
+  and wait for the pasted output. Never poll or wait on long processes.
+- **The agent edits files** in vibe mode and in `5-setup`: config files (package.json, pubspec.yaml, .xml, .kts,
+  .yaml, .toml, requirements.txt, .gitignore...) and code. Never ask the user to hand-edit a config file.
+- **Git (`git: user`):** the user makes all git changes. Give commands for repo files only, each listed. Read-only
+  git (`git -C <repo> status/log/diff`) is fine. Details: the plugin's `shared/your-turn.md`.
 
 ## Modes
-Asked at the start of `4-architecture`, `7-spec` and `8-build`, every time. All other skills are vibe.
+Asked at the start of `4-architecture`, `7-spec` and `8-build`, every time. All other skills (including `5-setup`)
+are vibe.
 - **vibe:** the agent proposes and writes (code in `8-build`, documents everywhere).
 - **mentor:** the agent teaches. In `4-architecture` and `7-spec`: system design coaching; the user proposes, the
   agent challenges and explains, then the agent writes the document. In `8-build`: the user writes all code; the
@@ -71,8 +86,21 @@ Asked at the start of `4-architecture`, `7-spec` and `8-build`, every time. All 
   different names and domain from this project, labelled as an example.
 - Only the user can switch modes, in chat. Then update `mode:` in STATE.md and log it.
 
-## Language
-Plain, simple English. Short sentences. Explain a new term once, then use it.
+## How to write responses
+- **Short and plain.** Simple English, short sentences. Say it once. No filler ("Great question", "Let me",
+  "It's worth noting", recaps of what the user just said, closing encouragement).
+- **Lead with the answer or the question.** Context after, only if needed.
+- **Tables for anything long or comparative:** verdicts, options, trade-offs, findings, step summaries. Columns
+  like Item · Verdict · Reason. Not stacked paragraphs.
+- **One question block per turn,** at the end. Ask only what you can't find in the files.
+- Explain a new term once, then use it.
+
+## Settled points: don't repeat them
+A point is settled once the user has answered it or it's recorded in `profile.md`, `scope.md`, a master doc or
+`BUILD_LOG.md`. Before asking anything, check those files.
+Don't re-ask a settled point and don't keep raising it as a risk or concern. Bring it up again **only** when:
+1. a decision or action goes against what's settled (say which record it conflicts with), or
+2. something about it is genuinely vague and needs clarifying (ask once, specifically).
 
 ## Things the user has asked for in this project
 <!-- Standing preferences the user states. Add each with a BUILD_LOG reference. -->

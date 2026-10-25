@@ -35,10 +35,10 @@ Files only, never chat memory.
 New build: ask (`shared/mode-choice.md`). Record it in the checklist frontmatter and `STATE.md`.
 
 ## Git Check
-- `git status` (read-only). Not a repository → explain in one line why commits matter (every slice is a checkpoint)
-  and give `git init`; the user runs it.
-- `.gitignore` covers `/project-docs/profile.md`, `.env`, `.env.*` (allowing `.env.example`). In vibe mode you may edit
-  `.gitignore`; in mentor mode tell the user what to add.
+- `git -C <repo> status` (read-only; `<repo>` from `STATE.md`). If it isn't a repository, tell the user and stop;
+  they set up the repo. Never `git init` or clone.
+- `<repo>/.gitignore` covers `.env`, `.env.*` (allowing `.env.example`). Vibe mode: add missing rules yourself;
+  mentor mode: tell the user what to add.
 - Secrets or private files already tracked → stop and agree on a fix. Never rewrite history.
 
 ## Plan the Build
@@ -51,7 +51,7 @@ core behavior (what makes it lovable) early, not last. No target count.
 
 **Write `checklist.md`** from `templates/checklist-template.md`, `status: draft`, `mode:` set. Every slice has every
 field, in order, with the exact labels. `You run:` and `Pass when:` come from `spec.md > How We'll Verify`.
-`Commit:` lists files explicitly.
+`Commit:` lists repo files explicitly, relative to `<repo>/`; never project-docs files.
 
 ## The Gut Check
 Show the slice order in Markdown (never HTML): what becomes usable at each step and why it sits there. Ask once:
@@ -112,8 +112,8 @@ Tick each as you go:
 4. **Log a `FEATURE` summary:** what shipped, key decisions (L-IDs), bugs (L-IDs), parked ideas (P-IDs).
 5. **Show the parking lot** items added during this feature, in one short list.
 6. **Rewrite `STATE.md`:** `current_feature: none`, `mode: vibe`, `skill` and Next step for what's next.
-7. **Commit:** give the commands for the doc updates; the user commits.
-8. **Offer once:** the optional learning wrap-up and app map (`references/app-map.md`).
+   (Doc updates are outside git: no commit step.)
+7. **Offer once:** the optional learning wrap-up and app map (`references/app-map.md`).
 
 ## Hand Off
 "F-NN is built and merged into the master docs." Then suggest one next step: the next roadmap feature (`6-prd`);

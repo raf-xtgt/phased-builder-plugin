@@ -21,7 +21,7 @@ The one distinctive thing. If it were removed and nobody noticed, it isn't the k
 - **Platforms:** [web / iOS / Android / desktop / CLI].
 - **Where users are:** region(s). **Where the builder is:** country (affects services and payment providers).
 - **Data sensitivity:** none / personal data / payments / health / other.
-- **Time:** about ___ hours per week. Deadline: none / date (and why).
+- **Time:** about ___ hours per week. Deadline: none / date (and why). (Once answered, settled.)
 
 ## What Makes the Whole Product SLC
 - **Simple:** the one main job of the product.

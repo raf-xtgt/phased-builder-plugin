@@ -39,13 +39,18 @@ def main():
     if heads:
         parts += ["", "Most recent BUILD_LOG.md entries (newest last):"] + [f"- {h}" for h in heads]
 
+    repo = fm.get("repo", "")
+    if repo and repo != "none":
+        parts += ["", f"The code is in the repo folder `{repo}/`. project-docs/, CLAUDE.md and SETUP.md are in "
+                  "this parent folder, outside git, and are never committed."]
     mode = fm.get("mode", "")
     if mode == "mentor":
         parts += ["", "Mentor mode is on: code and project files are written by the user; "
-                  "the agent edits only files in project-docs/ and CLAUDE.md."]
-    elif mode == "guide":
-        parts += ["", "Setup (guide mode) is in progress: the user does every setup step; the agent gives "
-                  "steps, debugs from pasted output, and edits only files in project-docs/ and CLAUDE.md."]
+                  "the agent edits only project-docs/, CLAUDE.md and SETUP.md."]
+    else:
+        parts += ["", "Vibe mode: the agent edits code and config files itself (never asks the user to hand-edit them)."]
+    parts += ["", "Responses: short, plain English, tables for long or comparative content. Don't re-ask or "
+              "re-raise settled points unless something conflicts with them or is genuinely vague."]
     if fm.get("long_commands", "user") != "agent":
         parts += ["", "Installs, builds, tests, dev servers and deploys are run by the user. "
                   "The agent gives exact commands and expected output, then waits for pasted results."]

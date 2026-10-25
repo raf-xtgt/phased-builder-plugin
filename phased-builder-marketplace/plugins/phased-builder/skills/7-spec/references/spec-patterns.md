@@ -12,6 +12,12 @@ Start from `ARCHITECTURE.md` and say which parts this feature touches. Don't red
 - **Needs new tools, libraries, configs or cloud services:** list them under **Setup Needed**; they go through
   `5-setup` before or during `8-build` (the user installs them).
 
+## Code-level research (this is where it happens)
+`4-architecture` checked capabilities from the docs. Here, for the parts this feature uses, go deeper: the API
+reference pages, how the pieces are wired, setup the feature needs, and known issues (GitHub issues, changelogs,
+migration guides) that affect this feature. Cite each source with its date. Record findings that change the plan
+under **Decisions** or **Important Failure Modes**.
+
 ## The wiring blueprint (critical in mentor-mode builds)
 `8-build` may be done by the user in mentor mode, so the blueprint must let them:
 - know the build order (thin end-to-end slices, not layers);

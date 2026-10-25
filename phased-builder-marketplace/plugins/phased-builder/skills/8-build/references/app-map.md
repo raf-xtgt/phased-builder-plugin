@@ -11,13 +11,13 @@ Budget about five minutes.
 - **Revisit a bug:** one `BUG` entry and the evidence that found the cause.
 
 End with one reusable practice, grounded in this project's evidence. Optionally ask once: "What would you do
-differently next feature?" Record personal reflections only in `profile.md` (git-ignored).
+differently next feature?" Record personal reflections only in `profile.md` (outside the repo).
 
 ## The app map: `project-docs/app-map.html`
 A single living page, updated (not recreated) at the end of each feature where the user wants it.
 - Plain-language overview of the app and its main pieces (from `ARCHITECTURE.md`).
 - A small inline SVG or HTML/CSS diagram: one real action → its code locations → the visible result.
-- A short route per feature: real paths and symbols, one line each.
+- A short route per feature: real paths (relative to `<repo>/`) and symbols, one line each.
 - "To change this, start here" pointers.
 - Which feature added what, linking the feature folders.
 - The commit it reflects; note it can drift.

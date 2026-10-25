@@ -3,7 +3,7 @@ doc: profile
 ---
 <!-- Capture only context later skills use. Short and scannable, not a transcript.
      Record what the user shared or showed, with brief evidence. "Not established" is fine.
-     This file is git-ignored by default: personal context stays out of commits. -->
+     It lives in project-docs/, outside the repo, so it is never committed. -->
 
 # Profile
 

@@ -22,13 +22,22 @@ by questioning every feature objectively. The user decides; you make sure each d
 Be direct: "I'd cut this: it solves no pain in the problem statement and adds a backend." The user can overrule;
 record the reason when they do.
 
+Present verdicts as a table, not stacked blocks:
+
+| Feature | Pain it solves | Verdict | Reason |
+|---|---|---|---|
+| Stop early | Stuck in a long session | must-have v1 | Without it the user is trapped |
+| Pause | none stated | later (P-003) | Extra work; stop + restart covers it |
+
 ## Prioritizing what's left
 Order the roadmap by: the kernel first, then what completes the core journey, then what makes it lovable, then
 breadth. Risky unknowns early. Draw the **SLC v1 line**. A common light method to explain if useful: value vs effort
 (do high-value, low-effort first; question high-effort, low-value). Keep it a conversation, not a scoring ritual.
 
 ## Scale questions
-Ask for each item in `scope.md > Scale`. Explain once: "These decide what 'standard practice' means for you
+Fill each item in `scope.md > Scale` from `profile.md`, `ideation.md` and the log first; ask only what's
+missing. A user's answer is settled: record it and don't raise it again unless something conflicts with it.
+Explain once (only if asking): "These decide what 'standard practice' means for you
 later; a 50-user tool and a 50,000-user product need different designs." Best guesses are fine; label them.
 
 ## Writing PRODUCT.md

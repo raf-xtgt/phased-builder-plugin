@@ -1,11 +1,11 @@
 ---
 doc: state
+repo: none                   # the repo folder inside this parent folder, e.g. sandglass-app
 skill: 1-start               # the skill in progress: 1-start ... 10-opportunity
 current_feature: none        # feature folder in progress, e.g. 03-sand-animation, or none
-mode: vibe                   # vibe | mentor | guide   (hooks read this)
-                             #   vibe   = agent may write code and files
-                             #   mentor = agent writes only project-docs/ and CLAUDE.md (user writes code)
-                             #   guide  = 5-setup: agent writes only project-docs/; user does all setup steps
+mode: vibe                   # vibe | mentor   (hooks read this)
+                             #   vibe   = agent may edit code and config files
+                             #   mentor = 8-build: agent writes only project-docs/, CLAUDE.md, SETUP.md (user writes code)
 long_commands: user          # user | agent  (who runs installs, builds, tests, servers, deploys)
 git: user                    # user | agent  (who runs git add/commit/push)
 updated: YYYY-MM-DD

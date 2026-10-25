@@ -46,8 +46,9 @@ Aim for the areas this feature actually needs; usually 5–8 useful exchanges.
 4. **Opportunity impact** (if a brief is active): `shared/opportunity-impact.md` for this feature. In mentor mode, ask
    the user for impact ideas first.
 5. **Trace the journey** through the pieces; derive file changes. Diagram if it helps.
-6. **Wiring blueprint:** build order, connections, which framework feature does each job (doc links), standard
-   patterns, common mistakes.
+6. **Code-level research** for this feature (`references/spec-patterns.md`): API reference, wiring, known issues.
+   Then the **wiring blueprint:** build order, connections, which framework feature does each job (doc links),
+   standard patterns, common mistakes.
 7. **Verification plan:** for each acceptance criterion, what the user runs and what passing looks like.
 8. **Setup needed:** new tools, libraries, configs, cloud services.
 9. **One useful unknown:** a real uncertainty the user has, clarified or planned as a small check. Don't invent one.
@@ -60,8 +61,8 @@ every dependency. Save immediately. Self-review (`shared/design-patterns.md`).
 
 ## The Review
 - Review Format: Markdown, or optional HTML `spec.html` (data-flow diagram, component reveals); Markdown canonical.
-- Two to four sentences of honest feedback: every PRD behavior has a home, right size, verification realistic,
-  anything unverified.
+- Honest feedback in 2–3 bullets: every PRD behavior has a home, right size, verification realistic, anything
+  unverified. New points only.
 - Ask once: "Does this look good, or would you change anything?" "Looks good" approves it.
   In mentor mode, end with one sentence naming the design idea from this session most worth remembering.
 
